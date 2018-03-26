@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: Domenico
+Built-By: CARMINE
 Class-Path: dependency/telegrambots-3.4.jar dependency/telegrambots-me
  ta-3.4.jar dependency/guice-4.1.0.jar dependency/javax.inject-1.jar d
  ependency/aopalliance-1.0.jar dependency/guava-19.0.jar dependency/ja
@@ -23,7 +23,7 @@ Class-Path: dependency/telegrambots-3.4.jar dependency/telegrambots-me
  dency/commons-logging-1.2.jar dependency/commons-codec-1.9.jar depend
  ency/httpmime-4.5.3.jar dependency/commons-io-2.5.jar dependency/emoj
  i-java-3.1.3.jar
-Build-Jdk: 1.8.0_144
+Build-Jdk: 1.8.0_74
 Created-By: Maven Integration for Eclipse
 Main-Class: com.placebo.sababot.SabaMain
 
