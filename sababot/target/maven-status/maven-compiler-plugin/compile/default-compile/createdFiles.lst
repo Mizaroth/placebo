@@ -1,0 +1,4 @@
+com\placebo\sababot\SabaMain.class
+com\placebo\sababot\utils\ReplyDispatcher.class
+com\placebo\sababot\utils\RNGHandler.class
+com\placebo\sababot\bots\SabaBot.class

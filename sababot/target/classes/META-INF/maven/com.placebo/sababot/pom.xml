@@ -48,7 +48,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>dependency/</classpathPrefix>
-							<mainClass>com.placebo.sababot.Sababot</mainClass>
+							<mainClass>com.placebo.sababot.SabaMain</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -58,7 +58,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.placebo.sababot.Sababot</mainClass>
+							<mainClass>com.placebo.sababot.SabaMain</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
