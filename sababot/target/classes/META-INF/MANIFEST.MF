@@ -1,5 +1,29 @@
 Manifest-Version: 1.0
 Built-By: CARMINE
+Class-Path: dependency/telegrambots-3.4.jar dependency/telegrambots-me
+ ta-3.4.jar dependency/guice-4.1.0.jar dependency/javax.inject-1.jar d
+ ependency/aopalliance-1.0.jar dependency/guava-19.0.jar dependency/ja
+ ckson-annotations-2.8.0.jar dependency/jackson-jaxrs-json-provider-2.
+ 8.7.jar dependency/jackson-jaxrs-base-2.8.7.jar dependency/jackson-co
+ re-2.8.7.jar dependency/jackson-module-jaxb-annotations-2.8.7.jar dep
+ endency/jackson-databind-2.8.7.jar dependency/jersey-media-json-jacks
+ on-2.25.1.jar dependency/jersey-common-2.25.1.jar dependency/jersey-g
+ uava-2.25.1.jar dependency/osgi-resource-locator-1.0.1.jar dependency
+ /jersey-entity-filtering-2.25.1.jar dependency/jersey-container-grizz
+ ly2-http-2.25.1.jar dependency/javax.inject-2.5.0-b32.jar dependency/
+ grizzly-http-server-2.3.28.jar dependency/grizzly-http-2.3.28.jar dep
+ endency/grizzly-framework-2.3.28.jar dependency/javax.ws.rs-api-2.0.1
+ .jar dependency/jersey-server-2.25.1.jar dependency/jersey-client-2.2
+ 5.1.jar dependency/jersey-media-jaxb-2.25.1.jar dependency/javax.anno
+ tation-api-1.2.jar dependency/hk2-api-2.5.0-b32.jar dependency/hk2-ut
+ ils-2.5.0-b32.jar dependency/aopalliance-repackaged-2.5.0-b32.jar dep
+ endency/hk2-locator-2.5.0-b32.jar dependency/javassist-3.20.0-GA.jar 
+ dependency/validation-api-1.1.0.Final.jar dependency/json-20160810.ja
+ r dependency/httpclient-4.5.3.jar dependency/httpcore-4.4.6.jar depen
+ dency/commons-logging-1.2.jar dependency/commons-codec-1.9.jar depend
+ ency/httpmime-4.5.3.jar dependency/commons-io-2.5.jar dependency/emoj
+ i-java-3.1.3.jar
 Build-Jdk: 1.8.0_74
 Created-By: Maven Integration for Eclipse
+Main-Class: com.placebo.sababot.Sababot
 
