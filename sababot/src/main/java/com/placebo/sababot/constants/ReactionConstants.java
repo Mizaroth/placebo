@@ -36,6 +36,9 @@ public interface ReactionConstants {
       "Jooooooo "
   };
 
+  String SABA_SELFIE = "AgADBAADyqwxG8_Z0VEg3m4PiBPnJlkJmhoABBdEusYhWVvnkBcAAgI";
+  String SABA_SELFIE_CAPTION = "Fraatm sto tutt fresh!!";
+  
   Object[] VOICE_RECORDINGS = PropsLoader.listProps();
 
 }
