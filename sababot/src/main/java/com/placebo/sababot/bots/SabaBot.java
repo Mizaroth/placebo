@@ -14,7 +14,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import com.placebo.sababot.constants.ReactionConstants;
 import com.placebo.sababot.utils.RNGHandler;
-import com.placebo.sababot.utils.ReplyDispatcher;import com.vdurmont.emoji.EmojiParser;
+import com.placebo.sababot.utils.ReplyDispatcher;
 
 public class SabaBot extends TelegramLongPollingBot {
 
@@ -45,7 +45,7 @@ public class SabaBot extends TelegramLongPollingBot {
         if(userFrom != null)
           from = userFrom.getFirstName() + " '" + userFrom.getUserName() + "'" + ((userFrom.getLastName() != null) ? (" " + userFrom.getLastName()) : "") ;
 
-        if(userFrom != null && ("Mizaroth".equals(userFrom.getUserName())|| "cbarbato".equals(userFrom.getUserName()) )&& update.getMessage().getChat() != null && update.getMessage().getChat().getTitle() == null) {
+        if(userFrom != null && ("Mizaroth".equals(userFrom.getUserName()) || "cbarbato".equals(userFrom.getUserName()) )&& update.getMessage().getChat() != null && update.getMessage().getChat().getTitle() == null) {
           if(update.getMessage().hasPhoto()) {
             SendPhoto sp = new SendPhoto();
             sp.setPhoto(update.getMessage().getPhoto().get(0).getFileId());
@@ -139,7 +139,7 @@ public class SabaBot extends TelegramLongPollingBot {
 
   private boolean containsOneOf(String message, String[] triggers) {
     for(String trigger : triggers) {
-      if(message.matches("(" + trigger + ")"))
+      if(message.matches(".*\\b" + trigger + "\\b.*"))
         return true;
     }
 
