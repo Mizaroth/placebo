@@ -1,5 +1,5 @@
 package com.placebo.sababot.constants;
 
-public enum TelegramMessageTypeEnum {
+public enum TelegramMessageType {
   MESSAGE, VOICE, PHOTO;
 }
