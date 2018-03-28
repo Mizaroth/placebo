@@ -6,7 +6,7 @@ import org.telegram.telegrambots.api.methods.send.SendVoice;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import com.placebo.sababot.bots.SabaBot;
-import com.placebo.sababot.constants.TelegramMessageType;
+import com.placebo.sababot.constants.TelegramMessageTypeEnum;
 
 public class TelegramApiWrapper {
 
@@ -14,7 +14,7 @@ public class TelegramApiWrapper {
   private static final SendVoice SEND_VOICE = new SendVoice();
   private static final SendPhoto SEND_PHOTO = new SendPhoto();
 
-  public static boolean send(SabaBot sabaBot, TelegramMessageType messageType, long chatId, String... args) {
+  public static boolean send(SabaBot sabaBot, TelegramMessageTypeEnum messageType, long chatId, String... args) {
     boolean actionPerformed = false;
 
     switch(messageType) {
