@@ -56,7 +56,7 @@ public class SabaBot extends TelegramLongPollingBot {
 
       //10% of sending hilarious audio
       if(RNGHandler.procByPercentage(10)) {
-        String fileId = (String)ReplyDispatcher.reply(ReactionConstants.VOICE_RECORDINGS);
+        String fileId = (String)ReplyDispatcher.reply(ReactionConstants.getVoiceRecordings());
         actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
       }
 
@@ -83,8 +83,8 @@ public class SabaBot extends TelegramLongPollingBot {
           actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
         }
         
-        if(containsOneOf(messageCapitalized, ReactionConstants.SABATO)) {
-          String text = ReplyDispatcher.reply(ReactionConstants.SABATO_REPLY);
+        if(containsOneOf(messageCapitalized, ReactionConstants.getSabato())) {
+          String text = ReplyDispatcher.reply(ReactionConstants.getSabatoReply());
           actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
         }
       }
