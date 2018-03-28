@@ -1,7 +1,6 @@
 package com.placebo.sababot.bots;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
