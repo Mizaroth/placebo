@@ -6,20 +6,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 public class PropsLoader {
 
   private static final Properties PROPS = new Properties();
-
+  private static final Logger LOGGER = Logger.getLogger(PropsLoader.class);
+  
   static {
     try {
       PROPS.load(ClassLoader.class.getResourceAsStream("/META-INF/replies.properties"));
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.error("Error while trying to load replies.properties:", e);
     }
   }
 
-  public PropsLoader(String path) {
-    //OK
+  private PropsLoader() {
+    //do NOT instantiate
   }
 
   public static Object[] listProps() {

@@ -1,5 +1,6 @@
 package com.placebo.sababot.utils;
 
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.methods.send.SendVoice;
@@ -13,6 +14,11 @@ public class TelegramApiWrapper {
   private static final SendMessage SEND_MESSAGE = new SendMessage();
   private static final SendVoice SEND_VOICE = new SendVoice();
   private static final SendPhoto SEND_PHOTO = new SendPhoto();
+  private static final Logger LOGGER = Logger.getLogger(TelegramApiWrapper.class);
+  
+  private TelegramApiWrapper() {
+    //do NOT instantiate
+  }
 
   public static boolean send(SabaBot sabaBot, TelegramMessageType messageType, long chatId, String... args) {
     boolean actionPerformed = false;
@@ -39,7 +45,7 @@ public class TelegramApiWrapper {
       sabaBot.execute(SEND_MESSAGE);
       return true;
     } catch(TelegramApiException e) {
-      e.printStackTrace();
+      LOGGER.error("Error while trying to send a message:", e);
     }
     return false;
   }
@@ -52,7 +58,7 @@ public class TelegramApiWrapper {
       sabaBot.sendPhoto(SEND_PHOTO);
       return true;
     } catch (TelegramApiException e) {
-      e.printStackTrace();
+      LOGGER.error("Error while trying to send a photo:", e);
     }
     return false;
   }
@@ -65,7 +71,7 @@ public class TelegramApiWrapper {
       sabaBot.sendVoice(SEND_VOICE);
       return true;
     } catch (TelegramApiException e) {
-      e.printStackTrace();
+      LOGGER.error("Error while trying to send a voice recording:", e);
     }
     return false;
   }

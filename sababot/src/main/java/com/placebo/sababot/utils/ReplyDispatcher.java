@@ -6,6 +6,10 @@ public class ReplyDispatcher {
 
   private static final Random RNG = new Random();
 
+  private ReplyDispatcher() {
+    //do NOT instantiate
+  }
+
   public static String reply(String reply) {
     return reply;
   }
