@@ -23,7 +23,7 @@
 *.prefs
 .recommenders/
 **/target/**
-
+*.gitignore
 */settings/*
 */settings
 **/.settings/*
