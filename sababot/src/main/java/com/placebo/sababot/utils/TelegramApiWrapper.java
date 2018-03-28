@@ -28,7 +28,7 @@ public class TelegramApiWrapper {
       actionPerformed = sendMessage(sabaBot, chatId, args[0]);
       break;
     case VOICE:
-      actionPerformed = sendVoice(sabaBot, chatId, args[0]);
+      actionPerformed = sendVoice(sabaBot, chatId, args);
       break;
     case PHOTO:
       actionPerformed = sendPhoto(sabaBot, chatId, args);

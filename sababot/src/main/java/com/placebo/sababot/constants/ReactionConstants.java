@@ -11,6 +11,8 @@ public class ReactionConstants {
   
   public static final String SABA_SELFIE = "AgADBAADyqwxG8_Z0VEg3m4PiBPnJlkJmhoABBdEusYhWVvnkBcAAgI";
   public static final String SABA_SELFIE_CAPTION = "Fraatm sto tutt fresh!!";
+  public static final String LAVORO_DIFFICILE = "LAVORO DIFFICILE";
+  public static final String LAVORO_DIFFICILE_REPLY = "AwADBAADaAQAAi5a4VEBSDmG95c-gwI";
   public static final Object[] VOICE_RECORDINGS = PropsLoader.listProps();
   public static final String[] SABATO = {
       "SABA",

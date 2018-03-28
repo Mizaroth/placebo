@@ -78,6 +78,11 @@ public class SabaBot extends TelegramLongPollingBot {
           actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
         }
 
+        if(messageCapitalized.contains(ReactionConstants.LAVORO_DIFFICILE)) {
+          String fileId = ReactionConstants.LAVORO_DIFFICILE_REPLY;
+          actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
+        }
+        
         if(containsOneOf(messageCapitalized, ReactionConstants.SABATO)) {
           String text = ReplyDispatcher.reply(ReactionConstants.SABATO_REPLY);
           actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
