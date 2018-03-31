@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
@@ -20,20 +19,8 @@ import com.placebo.sababot.utils.TelegramApiWrapper;
 import com.placebo.sababot.utils.UploadFileStrategy;
 
 public class SabaBot extends TelegramLongPollingBot {
-
-	public SabaBot(ApplicationContext context) {
-		super();
-		this.context = context;
-	}
-
-	public SabaBot() {
-		super();
-	}
-
 	private static final Properties PROPS = new Properties();
 	private static final Logger LOGGER = Logger.getLogger(SabaBot.class);
-
-	private ApplicationContext context ;
 	@Autowired
 	private Map<String, UploadFileStrategy> strategyMap;
 
@@ -47,8 +34,6 @@ public class SabaBot extends TelegramLongPollingBot {
 
 	@Override
 	public void onUpdateReceived(Update update) {
-		ApiContextInitializer.init();
-		strategyMap = (Map)context.getBean("strategyMap");
 		if(update != null && update.hasMessage()) {
 			boolean actionPerformed = false;
 
@@ -140,5 +125,4 @@ public class SabaBot extends TelegramLongPollingBot {
 	public void setStrategyMap(Map<String, UploadFileStrategy> strategyMap) {
 		this.strategyMap = strategyMap;
 	}
-
 }

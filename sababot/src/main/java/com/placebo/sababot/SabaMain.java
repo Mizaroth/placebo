@@ -1,30 +1,45 @@
 package com.placebo.sababot;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import com.placebo.sababot.bots.SabaBot;
 
-public class SabaMain {
+@SpringBootApplication
+@ImportResource("classpath:applicationContext.xml")
+public class SabaMain implements CommandLineRunner {
 
   private static final Logger LOGGER = Logger.getLogger(SabaMain.class);
   
-  private SabaMain() {
-    //do NOT.
+  @Autowired
+  private SabaBot sabaBot;
+  
+  static {
+    ApiContextInitializer.init();
   }
 
   public static void main( String[] args ){
-  	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-  	ApiContextInitializer.init();
+    SpringApplication.run(SabaMain.class, args);
+  }
+
+  @Override
+  public void run(String... args) throws Exception {
     TelegramBotsApi botsApi = new TelegramBotsApi();
     try {
-      botsApi.registerBot(new SabaBot(context));
+      botsApi.registerBot(sabaBot);
     } catch (TelegramApiException e) {
       LOGGER.error("Error while trying to register the bot:", e);
     }
+  }
+  
+  public void setSabaBot(SabaBot sabaBot) {
+    this.sabaBot = sabaBot;
   }
 }
