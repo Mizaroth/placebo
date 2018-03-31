@@ -61,7 +61,7 @@ public class SabaBot extends TelegramLongPollingBot {
         //1% of mOcKiNg YoUr RePlY
         if(RNGHandler.procByPercentage(1)) {
           String text = ReplyDispatcher.mockReply(messageText);
-          Message message = new Message(TelegramMessageType.MESSAGE, chatId, text, userFrom);
+          Message message = new Message(TelegramMessageType.TEXT, chatId, text, userFrom);
           actionPerformed = telegramApiWrapper.send(message);
         }
 
@@ -73,7 +73,7 @@ public class SabaBot extends TelegramLongPollingBot {
 
         if(containsOneOf(messageCapitalized, ReactionConstants.getSabato())) {
           String text = ReplyDispatcher.reply(ReactionConstants.getSabatoReply());
-          Message message = new Message(TelegramMessageType.MESSAGE, chatId, text, userFrom);
+          Message message = new Message(TelegramMessageType.TEXT, chatId, text, userFrom);
           actionPerformed = telegramApiWrapper.send(message);
         }
       }

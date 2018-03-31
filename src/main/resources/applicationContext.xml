@@ -16,11 +16,24 @@
 	<bean id="sabaBot" class="com.placebo.sababot.bots.SabaBot">
 		<property name="telegramApiWrapper" ref="telegramApiWrapper" />
 	</bean>
-
+		
 	<bean id="telegramApiWrapper" class="com.placebo.sababot.core.impl.TelegramApiWrapper">
-		<property name="strategyMap" ref="strategyMap" />
+		<property name="messageTypeMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<util:map key-type="com.placebo.sababot.constants.TelegramMessageType">
+						<entry key="TEXT" value-ref="textMessageSender" />
+						<entry key="VOICE" value-ref="voiceMessageSender" />
+						<entry key="PHOTO" value-ref="photoMessageSender" />
+					</util:map>
+				</constructor-arg>
+				<constructor-arg>
+					<ref bean="textMessageSender" />
+				</constructor-arg>
+			</bean>
+		</property>
 	</bean>
-
+	
 	<bean id="messageSender" abstract="true" class="com.placebo.sababot.core.api.MessageSender">
 		<property name="sabaBot" ref="sabaBot" />
 	</bean>
@@ -40,16 +53,10 @@
 	</bean>
 	<bean id="sendVoice" class="org.telegram.telegrambots.api.methods.send.SendVoice" />
 
-	<util:map id="strategyMap">
-		<entry key="PHOTO" value-ref="photoMessageSender" />
-		<entry key="VOICE" value-ref="voiceMessageSender" />
-		<entry key="MESSAGE" value-ref="textMessageSender" />
-	</util:map>
-	
 	<bean id="voiceRecordingsLoader" class="com.placebo.sababot.utils.VoiceRecordingsLoader">
 		<property name="voiceRecordings" ref="voiceRecordings" />
 	</bean>
-	
-	<util:properties id="botProps" location="classpath:META-INF/user.properties"/>
-	<util:properties id="voiceRecordings" location="classpath:META-INF/voice.properties"/>
+
+	<util:properties id="botProps" location="classpath:META-INF/user.properties" />
+	<util:properties id="voiceRecordings" location="classpath:META-INF/voice.properties" />
 </beans>
