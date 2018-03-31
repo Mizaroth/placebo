@@ -1,9 +1,13 @@
 package com.placebo.sababot.bots;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -13,105 +17,128 @@ import com.placebo.sababot.constants.TelegramMessageType;
 import com.placebo.sababot.utils.RNGHandler;
 import com.placebo.sababot.utils.ReplyDispatcher;
 import com.placebo.sababot.utils.TelegramApiWrapper;
+import com.placebo.sababot.utils.UploadFileStrategy;
 
 public class SabaBot extends TelegramLongPollingBot {
 
-  private static final Properties PROPS = new Properties();
-  private static final Logger LOGGER = Logger.getLogger(SabaBot.class);
+	public SabaBot(ApplicationContext context) {
+		super();
+		this.context = context;
+	}
 
-  static {
-    try {
-      PROPS.load(ClassLoader.class.getResourceAsStream("/META-INF/user.properties"));
-    } catch (IOException e) {
-      LOGGER.error("Error while trying to load user.properties:", e);
-    }
-  }
+	public SabaBot() {
+		super();
+	}
 
-  @Override
-  public void onUpdateReceived(Update update) {
-    if(update != null && update.hasMessage()) {
-      boolean actionPerformed = false;
+	private static final Properties PROPS = new Properties();
+	private static final Logger LOGGER = Logger.getLogger(SabaBot.class);
 
-      Long chatId = update.getMessage().getChatId();
-      User userFrom = update.getMessage().getFrom();
+	private ApplicationContext context ;
+	@Autowired
+	private Map<String, UploadFileStrategy> strategyMap;
 
-      String from = null;
+	static {
+		try {
+			PROPS.load(ClassLoader.class.getResourceAsStream("/META-INF/user.properties"));
+		} catch (IOException e) {
+			LOGGER.error("Error while trying to load user.properties:", e);
+		}
+	}
 
-      if(userFrom != null)
-        from = userFrom.getFirstName() + " '" + userFrom.getUserName() + "'" + ((userFrom.getLastName() != null) ? (" " + userFrom.getLastName()) : "") ;
+	@Override
+	public void onUpdateReceived(Update update) {
+		ApiContextInitializer.init();
+		strategyMap = (Map)context.getBean("strategyMap");
+		if(update != null && update.hasMessage()) {
+			boolean actionPerformed = false;
 
-      if(userFrom != null && ("Mizaroth".equals(userFrom.getUserName()) || "cbarbato".equals(userFrom.getUserName()) )&& update.getMessage().getChat() != null && update.getMessage().getChat().getTitle() == null) {
-        if(update.getMessage().hasPhoto()) {
-          String fileId = update.getMessage().getPhoto().get(0).getFileId();
-          String caption = "File ID: " + update.getMessage().getPhoto().get(0).getFileId();
-          actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.PHOTO, chatId, fileId, caption);
-        }
+			Long chatId = update.getMessage().getChatId();
+			User userFrom = update.getMessage().getFrom();
 
-        if(update.getMessage().getVoice() != null) {
-          String fileId = update.getMessage().getVoice().getFileId();
-          String caption = "File ID: " + update.getMessage().getVoice().getFileId();
-          actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId, caption);
-        }
-      }
+			String from = null;
 
-      //10% of sending hilarious audio
-      if(RNGHandler.procByPercentage(10)) {
-        String fileId = (String)ReplyDispatcher.reply(ReactionConstants.getVoiceRecordings());
-        actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
-      }
+			if(userFrom != null)
+				from = userFrom.getFirstName() + " '" + userFrom.getUserName() + "'" + ((userFrom.getLastName() != null) ? (" " + userFrom.getLastName()) : "") ;
 
-      //5% of sending SabaSelfie
-      if(RNGHandler.procByPercentage(5)) {
-        String fileId = ReactionConstants.SABA_SELFIE;
-        String caption = ReactionConstants.SABA_SELFIE_CAPTION;
-        actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.PHOTO, chatId, fileId, caption);
-      }
+			if(userFrom != null && ("Mizaroth".equals(userFrom.getUserName()) || "cbarbato".equals(userFrom.getUserName()) )&& update.getMessage().getChat() != null && update.getMessage().getChat().getTitle() == null) {
+				actionPerformed = manageUserFeatures(update, actionPerformed, chatId);
+			}
 
-      String message = update.getMessage().getText();
+			//10% of sending hilarious audio
+			if(RNGHandler.procByPercentage(10)) {
+				String fileId = (String)ReplyDispatcher.reply(ReactionConstants.getVoiceRecordings());
+				actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
+			}
 
-      if(message != null) {
-        String messageCapitalized = message.toUpperCase();
+			//5% of sending SabaSelfie
+			if(RNGHandler.procByPercentage(5)) {
+				String fileId = ReactionConstants.SABA_SELFIE;
+				String caption = ReactionConstants.SABA_SELFIE_CAPTION;
+				actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.PHOTO, chatId, fileId, caption);
+			}
 
-        //1% of mOcKiNg YoUr RePlY
-        if(RNGHandler.procByPercentage(1)) {
-          String text = ReplyDispatcher.mockReply(message);
-          actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
-        }
+			String message = update.getMessage().getText();
 
-        if(messageCapitalized.contains(ReactionConstants.LAVORO_DIFFICILE)) {
-          String fileId = ReactionConstants.LAVORO_DIFFICILE_REPLY;
-          actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
-        }
-        
-        if(containsOneOf(messageCapitalized, ReactionConstants.getSabato())) {
-          String text = ReplyDispatcher.reply(ReactionConstants.getSabatoReply());
-          actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
-        }
-      }
+			if(message != null) {
+				String messageCapitalized = message.toUpperCase();
 
-      if(actionPerformed) {
-        LOGGER.info("Triggered by: " + from + " | Chat: " + ((update.getMessage().getChat() != null && update.getMessage().getChat().getTitle() != null) ? update.getMessage().getChat().getTitle() : "Private Chat" ));
-      }
-    }
-  }
+				//1% of mOcKiNg YoUr RePlY
+				if(RNGHandler.procByPercentage(1)) {
+					String text = ReplyDispatcher.mockReply(message);
+					actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
+				}
 
-  private boolean containsOneOf(String message, String[] triggers) {
-    for(String trigger : triggers) {
-      if(message.matches(".*\\b" + trigger + "\\b.*"))
-        return true;
-    }
+				if(messageCapitalized.contains(ReactionConstants.LAVORO_DIFFICILE)) {
+					String fileId = ReactionConstants.LAVORO_DIFFICILE_REPLY;
+					actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.VOICE, chatId, fileId);
+				}
 
-    return false;
-  }
+				if(containsOneOf(messageCapitalized, ReactionConstants.getSabato())) {
+					String text = ReplyDispatcher.reply(ReactionConstants.getSabatoReply());
+					actionPerformed = TelegramApiWrapper.send(this, TelegramMessageType.MESSAGE, chatId, text);
+				}
+			}
 
-  @Override
-  public String getBotUsername() {
-    return PROPS.getProperty("user");
-  }
+			if(actionPerformed) {
+				LOGGER.info("Triggered by: " + from + " | Chat: " + ((update.getMessage().getChat() != null && update.getMessage().getChat().getTitle() != null) ? update.getMessage().getChat().getTitle() : "Private Chat" ));
+			}
+		}
+	}
 
-  @Override
-  public String getBotToken() {
-    return PROPS.getProperty("token");
-  }
+	private boolean manageUserFeatures(Update update, boolean actionPerformed, Long chatId) {
+		if(update.getMessage().hasPhoto()) {
+			UploadFileStrategy strategy = strategyMap.get("PHOTO");
+			actionPerformed=strategy.uploadFile(this, update, chatId);
+		}
+
+		if(update.getMessage().getVoice() != null) {
+			UploadFileStrategy strategy = strategyMap.get("AUDIO");
+			actionPerformed=strategy.uploadFile(this, update, chatId);
+		}
+		return actionPerformed;
+	}
+
+	private boolean containsOneOf(String message, String[] triggers) {
+		for(String trigger : triggers) {
+			if(message.matches(".*\\b" + trigger + "\\b.*"))
+				return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public String getBotUsername() {
+		return PROPS.getProperty("user");
+	}
+
+	@Override
+	public String getBotToken() {
+		return PROPS.getProperty("token");
+	}
+
+	public void setStrategyMap(Map<String, UploadFileStrategy> strategyMap) {
+		this.strategyMap = strategyMap;
+	}
 
 }

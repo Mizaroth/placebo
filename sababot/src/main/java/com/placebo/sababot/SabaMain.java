@@ -1,6 +1,8 @@
 package com.placebo.sababot;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -16,10 +18,11 @@ public class SabaMain {
   }
 
   public static void main( String[] args ){
-    ApiContextInitializer.init();
+  	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+  	ApiContextInitializer.init();
     TelegramBotsApi botsApi = new TelegramBotsApi();
     try {
-      botsApi.registerBot(new SabaBot());
+      botsApi.registerBot(new SabaBot(context));
     } catch (TelegramApiException e) {
       LOGGER.error("Error while trying to register the bot:", e);
     }
