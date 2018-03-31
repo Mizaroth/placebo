@@ -1,0 +1,37 @@
+package com.placebo.sababot.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+public class VoiceRecordingsLoader {
+
+  private static Properties voiceRecordings;
+
+  private VoiceRecordingsLoader() {
+    //do NOT instantiate
+  }
+
+  public static Object[] listVoiceRecordings() {
+    List<String> props = null;
+    
+    for(Map.Entry<Object, Object> entry : voiceRecordings.entrySet()) {
+      if(props == null)
+        props = new ArrayList<>();
+      props.add((String)entry.getValue());
+    }
+    
+    return props != null ? props.toArray() : null;
+  }
+  
+  public static String get(String key) {
+    return voiceRecordings.getProperty(key);
+  }
+
+  //Used for Spring DI on static field -- ignore Sonar minor
+  public void setVoiceRecordings(Properties voiceRecordings) {
+    VoiceRecordingsLoader.voiceRecordings = voiceRecordings;
+  }
+
+}

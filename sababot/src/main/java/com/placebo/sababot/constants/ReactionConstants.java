@@ -1,6 +1,6 @@
 package com.placebo.sababot.constants;
 
-import com.placebo.sababot.utils.PropsLoader;
+import com.placebo.sababot.utils.VoiceRecordingsLoader;
 import com.vdurmont.emoji.EmojiParser;
 
 public class ReactionConstants {
@@ -13,7 +13,7 @@ public class ReactionConstants {
   public static final String SABA_SELFIE_CAPTION = "Fraatm sto tutt fresh!!";
   public static final String LAVORO_DIFFICILE = "LAVORO DIFFICILE";
   public static final String LAVORO_DIFFICILE_REPLY = "AwADBAADaAQAAi5a4VEBSDmG95c-gwI";
-  private static final Object[] VOICE_RECORDINGS = PropsLoader.listProps();
+  private static final Object[] VOICE_RECORDINGS = VoiceRecordingsLoader.listVoiceRecordings();
   private static final String[] SABATO = {
       "SABA",
       "SABATINO",

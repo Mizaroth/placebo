@@ -5,22 +5,51 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
    http://www.springframework.org/schema/util
-      http://www.springframework.org/schema/util/spring-util.xsd">
-      
+      http://www.springframework.org/schema/util/spring-util.xsd
+      http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
 	<bean id="sabaMain" class="com.placebo.sababot.SabaMain">
 		<property name="sabaBot" ref="sabaBot" />
 	</bean>
-	
+
 	<bean id="sabaBot" class="com.placebo.sababot.bots.SabaBot">
+		<property name="telegramApiWrapper" ref="telegramApiWrapper" />
+	</bean>
+
+	<bean id="telegramApiWrapper" class="com.placebo.sababot.core.impl.TelegramApiWrapper">
 		<property name="strategyMap" ref="strategyMap" />
 	</bean>
 
-	<util:map id="strategyMap">
-		<entry key="PHOTO" value-ref="uploadPhoto" />
-		<entry key="AUDIO" value-ref="uploadAudio" />
-	</util:map>
+	<bean id="messageSender" abstract="true" class="com.placebo.sababot.core.api.MessageSender">
+		<property name="sabaBot" ref="sabaBot" />
+	</bean>
 
-	<bean id="uploadPhoto" class="com.placebo.sababot.utils.UploadPhotoStrategy" />
-	<bean id="uploadAudio" class="com.placebo.sababot.utils.UploadAudioStrategy" />
+	<bean id="textMessageSender" class="com.placebo.sababot.core.impl.TextMessageSender">
+		<property name="sendText" ref="sendText" />
+	</bean>
+	<bean id="sendText" class="org.telegram.telegrambots.api.methods.send.SendMessage" />
+
+	<bean id="photoMessageSender" class="com.placebo.sababot.core.impl.PhotoMessageSender">
+		<property name="sendPhoto" ref="sendPhoto" />
+	</bean>
+	<bean id="sendPhoto" class="org.telegram.telegrambots.api.methods.send.SendPhoto" />
+
+	<bean id="voiceMessageSender" class="com.placebo.sababot.core.impl.VoiceMessageSender">
+		<property name="sendVoice" ref="sendVoice" />
+	</bean>
+	<bean id="sendVoice" class="org.telegram.telegrambots.api.methods.send.SendVoice" />
+
+	<util:map id="strategyMap">
+		<entry key="PHOTO" value-ref="photoMessageSender" />
+		<entry key="VOICE" value-ref="voiceMessageSender" />
+		<entry key="MESSAGE" value-ref="textMessageSender" />
+	</util:map>
 	
+	<bean id="voiceRecordingsLoader" class="com.placebo.sababot.utils.VoiceRecordingsLoader">
+		<property name="voiceRecordings" ref="voiceRecordings" />
+	</bean>
+	
+	<util:properties id="botProps" location="classpath:META-INF/user.properties"/>
+	<util:properties id="voiceRecordings" location="classpath:META-INF/voice.properties"/>
 </beans>
