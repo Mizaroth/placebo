@@ -19,15 +19,16 @@ public class UpdateProcessingStateImpl implements UpdateProcessingState {
   
   @Override
   public UpdateReceivedContext doExecute(UpdateReceivedContext updateReceivedContext) {
-    trackExecutedStep(updateReceivedContext);
-    return ((ExecuteAction)getActionMap().get(updateReceivedContext.getStrategyType())).execute(updateReceivedContext);
+    ExecuteAction executeAction = (ExecuteAction)getActionMap().get(updateReceivedContext.getStrategyType());
+    trackExecutedStep(updateReceivedContext, executeAction);
+    return executeAction.execute(updateReceivedContext);
   }
   
-  private void trackExecutedStep(UpdateReceivedContext updateReceivedContext) {
+  private void trackExecutedStep(UpdateReceivedContext updateReceivedContext, ExecuteAction executeAction) {
     if(updateReceivedContext != null) {
       if(updateReceivedContext.getExecutedSteps() == null)
         updateReceivedContext.setExecutedSteps(new ArrayList<>());
-      updateReceivedContext.getExecutedSteps().add(this.getClass().getSimpleName());
+      updateReceivedContext.getExecutedSteps().add(executeAction.getClass().getSimpleName());
     }
   }
   
