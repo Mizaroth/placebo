@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class VoiceRecordingsLoader {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
+public class VoiceRecordingsLoader {
   private static Properties voiceRecordings;
 
   private VoiceRecordingsLoader() {
@@ -29,7 +33,8 @@ public class VoiceRecordingsLoader {
     return voiceRecordings.getProperty(key);
   }
 
-  //Used for Spring DI on static field -- ignore Sonar minor
+  @Autowired
+  @Qualifier("voiceRecordings")
   public void setVoiceRecordings(Properties voiceRecordings) {
     VoiceRecordingsLoader.voiceRecordings = voiceRecordings;
   }

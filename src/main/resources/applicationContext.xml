@@ -49,10 +49,6 @@
 	</bean>
 	<bean id="sendVoice" class="org.telegram.telegrambots.api.methods.send.SendVoice" />
 
-	<bean id="voiceRecordingsLoader" class="com.placebo.sababot.utils.VoiceRecordingsLoader">
-		<property name="voiceRecordings" ref="voiceRecordings" />
-	</bean>
-
 	<util:properties id="botProps" location="classpath:META-INF/user.properties" />
 	<util:properties id="voiceRecordings" location="classpath:META-INF/voice.properties" />
 </beans>
