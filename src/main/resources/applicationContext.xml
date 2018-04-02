@@ -9,13 +9,13 @@
       http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<import resource="classpath:processUpdateChain-applicationContext.xml"/>
+	
 	<bean id="sabaMain" class="com.placebo.sababot.SabaMain">
 		<property name="sabaBot" ref="sabaBot" />
 	</bean>
 
-	<bean id="sabaBot" class="com.placebo.sababot.bots.SabaBot">
-		<property name="telegramApiWrapper" ref="telegramApiWrapper" />
-	</bean>
+	<bean id="sabaBot" class="com.placebo.sababot.bots.SabaBot"/>
 		
 	<bean id="telegramApiWrapper" class="com.placebo.sababot.core.impl.TelegramApiWrapper">
 		<property name="messageTypeMap">
@@ -32,10 +32,6 @@
 				</constructor-arg>
 			</bean>
 		</property>
-	</bean>
-	
-	<bean id="messageSender" abstract="true" class="com.placebo.sababot.core.api.MessageSender">
-		<property name="sabaBot" ref="sabaBot" />
 	</bean>
 
 	<bean id="textMessageSender" class="com.placebo.sababot.core.impl.TextMessageSender">

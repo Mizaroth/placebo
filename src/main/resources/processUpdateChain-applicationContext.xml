@@ -1,0 +1,180 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util.xsd
+      http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<!-- START PROCESSING CONFIG  -->
+	<!-- Processing Chain -->
+	<bean id="startUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="startUpdateProcessingState" />
+		<property name="nextChain" ref="manageSuperUserFeaturesUpdateProcessingChain" />
+	</bean>
+	<bean id="manageSuperUserFeaturesUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="manageSuperUserFeaturesUpdateProcessingState" />
+		<property name="nextChain" ref="reactUpdateProcessingChain" />
+	</bean>
+	<bean id="reactUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="reactUpdateProcessingState" />
+		<property name="nextChain" ref="sendAudioUpdateProcessingChain" />
+	</bean>
+	<bean id="sendAudioUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="sendAudioUpdateProcessingState" />
+		<property name="nextChain" ref="sendSelfieUpdateProcessingChain" />
+	</bean>
+	<bean id="sendSelfieUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="sendSelfieUpdateProcessingState" />
+		<property name="nextChain" ref="hardWorkUpdateProcessingChain" />
+	</bean>
+	<bean id="hardWorkUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="hardWorkUpdateProcessingState" />
+		<property name="nextChain" ref="mockReplyUpdateProcessingChain" />
+	</bean>
+	<bean id="mockReplyUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="mockReplyUpdateProcessingState" />
+	</bean>
+	
+	<!-- Processing State -->
+	<bean id="startUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteStart" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeStart" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="manageSuperUserFeaturesUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteManageSuperUserFeatures" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeManageSuperUserFeatures" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="reactUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteReact" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeReact" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="sendAudioUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteSendAudio" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeSendAudio" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="sendSelfieUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteSendSelfie" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeSendSelfie" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="hardWorkUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteHardWork" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeHardWork" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="mockReplyUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteMockReply" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeMockReply" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Processing Guards -->
+	<bean id="checkExecuteStart" class="com.placebo.sababot.processing.impl.rules.CheckExecuteStart" />
+	<bean id="checkExecuteManageSuperUserFeatures" class="com.placebo.sababot.processing.impl.rules.CheckExecuteManageSuperUserFeatures" />
+	<bean id="checkExecuteReact" class="com.placebo.sababot.processing.impl.rules.CheckExecuteReact" />
+	<bean id="checkExecuteSendAudio" class="com.placebo.sababot.processing.impl.rules.CheckExecuteSendAudio" />
+	<bean id="checkExecuteSendSelfie" class="com.placebo.sababot.processing.impl.rules.CheckExecuteSendSelfie" />
+	<bean id="checkExecuteHardWork" class="com.placebo.sababot.processing.impl.rules.CheckExecuteHardWork" />
+	<bean id="checkExecuteMockReply" class="com.placebo.sababot.processing.impl.rules.CheckExecuteMockReply" />
+	
+	<!-- Processing Actions -->
+	<bean id="executeStart" class="com.placebo.sababot.processing.impl.actions.ExecuteStart" />
+	<bean id="executeManageSuperUserFeatures" class="com.placebo.sababot.processing.impl.actions.ExecuteManageSuperUserFeatures" />
+	<bean id="executeReact" class="com.placebo.sababot.processing.impl.actions.ExecuteReact" />
+	<bean id="executeSendAudio" class="com.placebo.sababot.processing.impl.actions.ExecuteSendAudio" />
+	<bean id="executeSendSelfie" class="com.placebo.sababot.processing.impl.actions.ExecuteSendSelfie" />
+	<bean id="executeHardWork" class="com.placebo.sababot.processing.impl.actions.ExecuteHardWork" />
+	<bean id="executeMockReply" class="com.placebo.sababot.processing.impl.actions.ExecuteMockReply" />
+	
+	<!-- END PROCESSING CONFIG  -->
+</beans>

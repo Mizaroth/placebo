@@ -1,7 +1,6 @@
 package com.placebo.sababot;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,8 +16,6 @@ import com.placebo.sababot.bots.SabaBot;
 public class SabaMain implements CommandLineRunner {
 
   private static final Logger LOGGER = Logger.getLogger(SabaMain.class);
-  
-  @Autowired
   private SabaBot sabaBot;
   
   static {
