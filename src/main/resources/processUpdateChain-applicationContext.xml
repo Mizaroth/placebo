@@ -20,6 +20,10 @@
 	</bean>
 	<bean id="reactUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
 		<property name="state" ref="reactUpdateProcessingState" />
+		<property name="nextChain" ref="sabaForecastUpdateProcessingChain" />
+	</bean>
+	<bean id="sabaForecastUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
+		<property name="state" ref="sabaForecastUpdateProcessingState" />
 		<property name="nextChain" ref="sendAudioUpdateProcessingChain" />
 	</bean>
 	<bean id="sendAudioUpdateProcessingChain" class="com.placebo.sababot.processing.impl.chain.UpdateProcessingChainImpl">
@@ -89,6 +93,23 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<bean id="sabaForecastUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
+		<property name="guardMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="checkExecuteSabaForecast" />
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="actionMap">
+			<bean class="org.apache.commons.collections.map.DefaultedMap">
+				<constructor-arg>
+					<ref bean="executeSabaForecast" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>	
 	
 	<bean id="sendAudioUpdateProcessingState" class="com.placebo.sababot.processing.impl.state.UpdateProcessingStateImpl">
 		<property name="guardMap">
@@ -162,6 +183,7 @@
 	<bean id="checkExecuteStart" class="com.placebo.sababot.processing.impl.rules.CheckExecuteStart" />
 	<bean id="checkExecuteManageSuperUserFeatures" class="com.placebo.sababot.processing.impl.rules.CheckExecuteManageSuperUserFeatures" />
 	<bean id="checkExecuteReact" class="com.placebo.sababot.processing.impl.rules.CheckExecuteReact" />
+	<bean id="checkExecuteSabaForecast" class="com.placebo.sababot.processing.impl.rules.CheckExecuteSabaForecast" />
 	<bean id="checkExecuteSendAudio" class="com.placebo.sababot.processing.impl.rules.CheckExecuteSendAudio" />
 	<bean id="checkExecuteSendSelfie" class="com.placebo.sababot.processing.impl.rules.CheckExecuteSendSelfie" />
 	<bean id="checkExecuteHardWork" class="com.placebo.sababot.processing.impl.rules.CheckExecuteHardWork" />
@@ -171,6 +193,7 @@
 	<bean id="executeStart" class="com.placebo.sababot.processing.impl.actions.ExecuteStart" />
 	<bean id="executeManageSuperUserFeatures" class="com.placebo.sababot.processing.impl.actions.ExecuteManageSuperUserFeatures" />
 	<bean id="executeReact" class="com.placebo.sababot.processing.impl.actions.ExecuteReact" />
+	<bean id="executeSabaForecast" class="com.placebo.sababot.processing.impl.actions.ExecuteSabaForecast" />
 	<bean id="executeSendAudio" class="com.placebo.sababot.processing.impl.actions.ExecuteSendAudio" />
 	<bean id="executeSendSelfie" class="com.placebo.sababot.processing.impl.actions.ExecuteSendSelfie" />
 	<bean id="executeHardWork" class="com.placebo.sababot.processing.impl.actions.ExecuteHardWork" />
