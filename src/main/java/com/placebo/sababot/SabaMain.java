@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -27,6 +28,7 @@ public class SabaMain implements CommandLineRunner {
   }
 
   @Override
+  @Transactional
   public void run(String... args) throws Exception {
     TelegramBotsApi botsApi = new TelegramBotsApi();
     try {
@@ -35,7 +37,7 @@ public class SabaMain implements CommandLineRunner {
       LOGGER.error("Error while trying to register the bot:", e);
     }
   }
-  
+
   public void setSabaBot(SabaBot sabaBot) {
     this.sabaBot = sabaBot;
   }

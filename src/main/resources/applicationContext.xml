@@ -8,8 +8,12 @@
       http://www.springframework.org/schema/util/spring-util.xsd
       http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-
+	
+	<import resource="classpath:persistenceConfig.xml"/>
 	<import resource="classpath:processUpdateChain-applicationContext.xml"/>
+	<!-- START ENTITY -->
+	<bean id="triggerDAO" class="com.placebo.sababot.repository.dao.TriggerDAO" />
+	<!-- END ENTITY -->
 	
 	<bean id="sabaMain" class="com.placebo.sababot.SabaMain">
 		<property name="sabaBot" ref="sabaBot" />

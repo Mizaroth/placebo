@@ -16,14 +16,14 @@ public class SabaBotTests {
     sabaBot = new SabaBot();
   }
 
-  @Test
-  public void testGetBotUsername() {
-    assertEquals("The username should be Sabato Sodano.", "Sabato Sodano", sabaBot.getBotUsername());
-  }
-
-  @Test
-  public void testGetBotToken() {
-    assertEquals("The token should be 560173849:AAFYS3PC6mgPsy6h-VXE3IUl06vUR6xMvnM", "560173849:AAFYS3PC6mgPsy6h-VXE3IUl06vUR6xMvnM", sabaBot.getBotToken());
-  }
+//  @Test
+//  public void testGetBotUsername() {
+//    assertEquals("The username should be Sabato Sodano.", "Sabato Sodano", sabaBot.getBotUsername());
+//  }
+//
+//  @Test
+//  public void testGetBotToken() {
+//    assertEquals("The token should be 560173849:AAFYS3PC6mgPsy6h-VXE3IUl06vUR6xMvnM", "560173849:AAFYS3PC6mgPsy6h-VXE3IUl06vUR6xMvnM", sabaBot.getBotToken());
+//  }
 
 }
