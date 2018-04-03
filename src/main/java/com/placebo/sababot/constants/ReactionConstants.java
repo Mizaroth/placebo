@@ -33,6 +33,32 @@ public class ReactionConstants {
       EmojiParser.parseToUnicode("Fragolaaaaa :strawberry: :strawberry:"),
       "Jooooooo "
   };
+  private static final String[] SABA_FORECAST = {
+      "CALDO",
+      "FREDDO",
+      "CALD",
+      "CAVR",
+      "FRIDD",
+      "SOLE",
+      "PIOGGIA",
+      "PIOVE",
+      "NEVE",
+      "NEVICA",
+      "PIOGG",
+      "SCHIZZICHEA",
+      "NUVOLE",
+      "TEMPORALE",
+      "TEMPESTA",
+      "CHIOV",
+      "OMBRELLO",
+      "CALDISSIMO",
+      "FREDDISSIMO",
+      "CALDISSIM",
+      "FREDDISSIM"
+  };
+  public static final String SABA_FORECAST_REPLY = "Qua fanno %d° gradi, c sfaccimm";
+  public static final String SABA_FORECAST_PIOVE_ADD = "E chiov pur..";
+  public static final String SABA_FORECAST_SOLE_ADD = "Ce sta nu sol esagerat..";
 
   public static Object[] getVoiceRecordings() {
     return VOICE_RECORDINGS.clone();
@@ -44,5 +70,9 @@ public class ReactionConstants {
   
   public static String[] getSabatoReply() {
     return SABATO_REPLY.clone();
+  }
+  
+  public static String[] getSabaForecast() {
+    return SABA_FORECAST.clone();
   }
 }

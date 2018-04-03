@@ -48,7 +48,11 @@
 		<property name="sendVoice" ref="sendVoice" />
 	</bean>
 	<bean id="sendVoice" class="org.telegram.telegrambots.api.methods.send.SendVoice" />
+	
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
 
 	<util:properties id="botProps" location="classpath:META-INF/user.properties" />
 	<util:properties id="voiceRecordings" location="classpath:META-INF/voice.properties" />
+	<util:properties id="weatherProps" location="classpath:META-INF/weather.properties" />
+	
 </beans>
