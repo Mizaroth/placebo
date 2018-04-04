@@ -6,8 +6,6 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
@@ -28,7 +26,6 @@ public class SabaBot extends TelegramLongPollingBot  {
   private static final Logger LOGGER = Logger.getLogger(SabaBot.class);
 
   @Override
-  @Transactional(propagation=Propagation.REQUIRED)
   public void onUpdateReceived(Update update) {
     if(update != null && update.hasMessage()) {
       /** Process the received Update **/

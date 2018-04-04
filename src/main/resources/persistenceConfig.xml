@@ -12,6 +12,8 @@
 	http://www.springframework.org/schema/tx
       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+	<context:property-placeholder location="classpath:META-INF/db.properties" />
+	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.placebo.sababot.models" />
@@ -24,9 +26,9 @@
 					org.hibernate.dialect.PostgreSQL95Dialect
 				</prop>
 				<prop key="hibernate.show_sql">
-					true
+					false
 				</prop>
-				<prop key="hibernate.jdbc.lob.non_contextual_creation=true">
+				<prop key="hibernate.jdbc.lob.non_contextual_creation">
 					true
 				</prop>
 			</props>
@@ -35,12 +37,10 @@
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url"
-			value="jdbc:postgresql://ec2-79-125-12-27.eu-west-1.compute.amazonaws.com:5432/d6tn1c52uqolrj?sslmode=require" />
-		<property name="username" value="agonpadpfsoxmj" />
-		<property name="password"
-			value="2ea66646dcf0d2fd9ed854502655eb7b0b78e2dc30f08ea62b2940d7b4d0d58b" />
+		<property name="driverClassName" value="${db.driverClassName}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="txManager" />

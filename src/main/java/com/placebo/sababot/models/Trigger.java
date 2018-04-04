@@ -2,6 +2,7 @@ package com.placebo.sababot.models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,15 +13,22 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="Trigger")
-@SequenceGenerator(name="TriggerSeqGen", sequenceName="TriggerSeq", allocationSize=1)
+@Table(name="TRIGGER")
+@SequenceGenerator(name="TriggerSeqGen", sequenceName="TRIGGER_SEQ", allocationSize=1)
 public class Trigger {
   @Id
   @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TriggerSeqGen")
+  @Column(name="ID_TRIGGER")
   private long id;
+  
+  @Column(name="SOURCE")
   private String source;
+  
+  @Column(name="CHAT_TITLE")
   private String chatTitle;
+  
   @Temporal(TemporalType.TIMESTAMP)
+  @Column(name="TRIGGER_TIME")
   private Date triggerTime;
 
   public Trigger() {

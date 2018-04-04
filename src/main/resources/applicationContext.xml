@@ -11,8 +11,12 @@
 	
 	<import resource="classpath:persistenceConfig.xml"/>
 	<import resource="classpath:processUpdateChain-applicationContext.xml"/>
+
 	<!-- START ENTITY -->
 	<bean id="triggerDAO" class="com.placebo.sababot.repository.dao.TriggerDAO" />
+	<bean id="cityWeatherDAO" class="com.placebo.sababot.repository.dao.CityWeatherDAO">
+		<property name="checkIsCachedCityWeatherQuery" value="checkIsCachedCityWeatherQuery" />
+	</bean>
 	<!-- END ENTITY -->
 	
 	<bean id="sabaMain" class="com.placebo.sababot.SabaMain">
