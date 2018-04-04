@@ -35,7 +35,7 @@ public class SabaMain implements CommandLineRunner {
       LOGGER.error("Error while trying to register the bot:", e);
     }
   }
-  
+
   public void setSabaBot(SabaBot sabaBot) {
     this.sabaBot = sabaBot;
   }
