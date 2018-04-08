@@ -68,16 +68,7 @@ public class ExecuteSabaForecast implements ExecuteAction {
     /** Build reply based on weather information **/
     if(cityWeather != null && cityWeather.getMain() != null
         && cityWeather.getMain().getTemp() != null) {
-      long truncDegrees = Math.round(cityWeather.getMain().getTemp());
-      boolean isRainy = isRainy(cityWeather);
-      boolean isSunnyDay = isDayTime(cityWeather) && !isCloudy(cityWeather) && !isRainy;
-
-      String replyText = new StringBuilder()
-          .append(String.format(ReactionConstants.SABA_FORECAST_REPLY, truncDegrees))
-          .append(isRainy ? "\n" + ReactionConstants.SABA_FORECAST_PIOVE_ADD : "")
-          .append(isSunnyDay ? "\n" + ReactionConstants.SABA_FORECAST_SOLE_ADD : "")
-          .toString();
-
+      String replyText = buildWeatherResponse(cityWeather);
       Message messageTo = new Message(TelegramMessageType.TEXT, chatId, replyText, userFrom);
 
       if(!updateContext.isActionPerformed())
@@ -85,6 +76,18 @@ public class ExecuteSabaForecast implements ExecuteAction {
     }
 
     return updateContext;
+  }
+
+  private String buildWeatherResponse(CityWeather cityWeather) {
+    long truncDegrees = Math.round(cityWeather.getMain().getTemp());
+    boolean isRainy = isRainy(cityWeather);
+    boolean isSunnyDay = isDayTime(cityWeather) && !isCloudy(cityWeather) && !isRainy;
+
+    return new StringBuilder()
+        .append(String.format(ReactionConstants.SABA_FORECAST_REPLY, truncDegrees))
+        .append(isRainy ? "\n" + ReactionConstants.SABA_FORECAST_PIOVE_ADD : "")
+        .append(isSunnyDay ? "\n" + ReactionConstants.SABA_FORECAST_SOLE_ADD : "")
+        .toString();
   }
 
   private CityWeather buildCityWeather(CityWeather cityWeather, Long maxId) {
@@ -128,12 +131,12 @@ public class ExecuteSabaForecast implements ExecuteAction {
 
     return false;
   }
-  
+
 
   private boolean isCloudy(CityWeather cityWeather) {
-    if(cityWeather.getClouds() != null)
-      return !Integer.valueOf(0).equals(cityWeather.getClouds().getAll());
-    
+    if(cityWeather.getClouds() != null && cityWeather.getClouds().getAll() != null)
+      return cityWeather.getClouds().getAll() <= 35;
+
     return false;
   }
 
