@@ -135,7 +135,7 @@ public class ExecuteSabaForecast implements ExecuteAction {
 
   private boolean isCloudy(CityWeather cityWeather) {
     if(cityWeather.getClouds() != null && cityWeather.getClouds().getAll() != null)
-      return cityWeather.getClouds().getAll() <= 35;
+      return cityWeather.getClouds().getAll() > 35;
 
     return false;
   }
