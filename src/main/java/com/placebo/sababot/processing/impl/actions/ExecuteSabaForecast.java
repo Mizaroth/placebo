@@ -17,7 +17,6 @@ import com.placebo.sababot.core.impl.TelegramApiWrapper;
 import com.placebo.sababot.models.CityWeather;
 import com.placebo.sababot.models.Message;
 import com.placebo.sababot.models.UpdateReceivedContext;
-import com.placebo.sababot.models.Weather;
 import com.placebo.sababot.processing.api.ExecuteAction;
 import com.placebo.sababot.repository.dao.CityWeatherDAO;
 
@@ -107,10 +106,9 @@ public class ExecuteSabaForecast implements ExecuteAction {
       cityWeather.getWind().setCityWeather(cityWeather);
 
     if(CollectionUtils.isNotEmpty(cityWeather.getWeather())) {
-      for(Weather weather : cityWeather.getWeather()) {
-        weather.setCityWeather(cityWeather);
-      }
+      cityWeather.getWeather().stream().forEach(e -> e.setCityWeather(cityWeather));
     }
+    
     return cityWeather;
   }
 

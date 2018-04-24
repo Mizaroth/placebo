@@ -1,5 +1,7 @@
 package com.placebo.sababot.processing.impl.rules;
 
+import java.util.Arrays;
+
 import org.telegram.telegrambots.api.objects.Message;
 
 import com.placebo.sababot.constants.ReactionConstants;
@@ -18,11 +20,10 @@ public class CheckExecuteReact implements CheckRule {
   }
   
   private boolean containsOneOf(String message, String[] triggers) {
-    for(String trigger : triggers) {
-      if(message.matches(".*\\b" + trigger + "\\b.*"))
-        return true;
-    }
-    return false;
+    return Arrays.stream(triggers)
+        .filter(trig -> message.matches(".*\\b" + trig + "\\b.*"))
+        .findFirst()
+        .orElse(null) != null;
   }
 
 }
