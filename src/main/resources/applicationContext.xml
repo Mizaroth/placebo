@@ -14,7 +14,7 @@
 	<import resource="classpath:persistenceConfig.xml"/>
 	<import resource="classpath:processUpdateChain-applicationContext.xml"/>
 
-	<task:executor id="logTaskExecutor" pool-size="8-16"
+	<task:executor id="logTaskExecutor" pool-size="1-8"
 		queue-capacity="1000" rejection-policy="CALLER_RUNS" />
 	
 	<!-- START ENTITY -->
