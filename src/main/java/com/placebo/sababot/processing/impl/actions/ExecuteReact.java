@@ -9,6 +9,7 @@ import com.placebo.sababot.core.impl.TelegramApiWrapper;
 import com.placebo.sababot.models.Message;
 import com.placebo.sababot.models.UpdateReceivedContext;
 import com.placebo.sababot.processing.api.ExecuteAction;
+import com.placebo.sababot.utils.MethodLog;
 import com.placebo.sababot.utils.ReplyDispatcher;
 
 public class ExecuteReact implements ExecuteAction {
@@ -16,6 +17,7 @@ public class ExecuteReact implements ExecuteAction {
   private TelegramApiWrapper telegramApiWrapper;
 
   @Override
+  @MethodLog(fields = { "from", "chatTitle" }, logLevel="INFO", chrono=true)
   public <T extends UpdateReceivedContext> T execute(T updateContext) {
     org.telegram.telegrambots.api.objects.Message messageFrom = updateContext.getUpdate().getMessage();
     Long chatId = messageFrom.getChatId();

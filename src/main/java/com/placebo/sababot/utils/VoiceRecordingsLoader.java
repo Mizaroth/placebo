@@ -1,8 +1,6 @@
 package com.placebo.sababot.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +16,11 @@ public class VoiceRecordingsLoader {
   }
 
   public static Object[] listVoiceRecordings() {
-    List<String> props = null;
-    
-    for(Map.Entry<Object, Object> entry : voiceRecordings.entrySet()) {
-      if(props == null)
-        props = new ArrayList<>();
-      props.add((String)entry.getValue());
-    }
-    
-    return props != null ? props.toArray() : null;
+    return voiceRecordings.entrySet().stream()
+        .map(Entry::getValue)
+        .toArray();
   }
-  
+
   public static String get(String key) {
     return voiceRecordings.getProperty(key);
   }
