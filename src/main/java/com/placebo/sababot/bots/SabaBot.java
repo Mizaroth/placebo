@@ -13,6 +13,7 @@ import com.placebo.sababot.models.Trigger;
 import com.placebo.sababot.models.UpdateReceivedContext;
 import com.placebo.sababot.processing.api.UpdateProcessingChain;
 import com.placebo.sababot.repository.dao.TriggerDAO;
+import com.placebo.sababot.utils.MessageExtractor;
 
 public class SabaBot extends TelegramLongPollingBot  {
   @Value("#{botProps.user}")
@@ -37,7 +38,7 @@ public class SabaBot extends TelegramLongPollingBot  {
       String chatTitle = updateReceivedContext.getChatTitle();
       if(updateReceivedContext.isActionPerformed()) {
         LOGGER.info("Triggered by: " + from + " | Chat: " + chatTitle);
-        triggerDAO.create(new Trigger(from, chatTitle, new Date()));
+        triggerDAO.create(new Trigger(from, chatTitle, new Date(), MessageExtractor.extract(update)));
       }
     }
   }

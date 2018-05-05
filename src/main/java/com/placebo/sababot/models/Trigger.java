@@ -41,6 +41,9 @@ public class Trigger {
   @Column(name="CHAT_TITLE")
   private String chatTitle;
   
+  @Column(name="MESSAGE")
+  private String message;
+  
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name="TRIGGER_TIME")
   private Date triggerTime;
@@ -52,6 +55,12 @@ public class Trigger {
     this.source = source;
     this.chatTitle = chatTitle;
     this.triggerTime = triggerTime;
+  }
+  public Trigger(String source, String chatTitle, Date triggerTime, String message) {
+    this.source = source;
+    this.chatTitle = chatTitle;
+    this.triggerTime = triggerTime;
+    this.message = message;
   }
   public long getId() {
     return id;
@@ -76,5 +85,11 @@ public class Trigger {
   }
   public void setTriggerTime(Date triggerTime) {
     this.triggerTime = triggerTime;
+  }
+  public String getMessage() {
+    return message;
+  }
+  public void setMessage(String message) {
+    this.message = message;
   }
 }

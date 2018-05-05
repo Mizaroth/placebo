@@ -17,7 +17,7 @@ public class ExecuteReact implements ExecuteAction {
   private TelegramApiWrapper telegramApiWrapper;
 
   @Override
-  @MethodLog(fields = { "from", "chatTitle" }, logLevel="INFO", chrono=true)
+  @MethodLog(fields = { "from", "chatTitle" }, logLevel="DEBUG", chrono=true)
   public <T extends UpdateReceivedContext> T execute(T updateContext) {
     org.telegram.telegrambots.api.objects.Message messageFrom = updateContext.getUpdate().getMessage();
     Long chatId = messageFrom.getChatId();
