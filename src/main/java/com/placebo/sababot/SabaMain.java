@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -14,6 +15,7 @@ import com.placebo.sababot.bots.SabaBot;
 
 @SpringBootApplication
 @EnableAsync
+@EnableScheduling
 @ImportResource("classpath:applicationContext.xml")
 public class SabaMain implements CommandLineRunner {
 

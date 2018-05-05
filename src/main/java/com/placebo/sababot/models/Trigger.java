@@ -7,11 +7,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@NamedNativeQueries({
+  @NamedNativeQuery(
+    name="needsToBeCleanedQuery",
+    query="select sum(n_live_tup)/10000 >= 0.5 from pg_stat_user_tables;"
+  ),
+  @NamedNativeQuery(
+      name="performCleaningStatement",
+      query="delete from trigger where id_trigger in "
+          + "(select trigger.id_trigger from trigger order by id_trigger limit "
+          + "(select count(id_trigger)*0.75 from trigger));"
+    )
+})
 @Entity
 @Table(name="TRIGGER")
 @SequenceGenerator(name="TriggerSeqGen", sequenceName="TRIGGER_SEQ", allocationSize=1)
