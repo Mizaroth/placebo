@@ -10,15 +10,21 @@
       http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
-	
 	<import resource="classpath:persistenceConfig.xml"/>
 	<import resource="classpath:processUpdateChain-applicationContext.xml"/>
-
+	
+	<!-- TASK EXECUTORS -->
 	<task:executor id="logTaskExecutor" pool-size="1-8"
 		queue-capacity="1000" rejection-policy="CALLER_RUNS" />
 	
+	<task:executor id="scheduledTaskExecutor" pool-size="1-3"
+		queue-capacity="100" rejection-policy="CALLER_RUNS" />
+	
 	<!-- START ENTITY -->
-	<bean id="triggerDAO" class="com.placebo.sababot.repository.dao.TriggerDAO" />
+	<bean id="triggerDAO" class="com.placebo.sababot.repository.dao.TriggerDAO">
+		<property name="needsToBeCleanedQuery" value="needsToBeCleanedQuery" />
+		<property name="performCleaningStatement" value="performCleaningStatement" />
+	</bean>
 	<bean id="cityWeatherDAO" class="com.placebo.sababot.repository.dao.CityWeatherDAO">
 		<property name="checkIsCachedCityWeatherQuery" value="checkIsCachedCityWeatherQuery" />
 	</bean>
@@ -63,6 +69,8 @@
 	<bean id="sendVoice" class="org.telegram.telegrambots.api.methods.send.SendVoice" />
 	
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+	
+	<bean id="scheduledCleaningAgent" class="com.placebo.sababot.scheduled.ScheduledCleaningAgent" />
 
 	<util:properties id="botProps" location="classpath:META-INF/user.properties" />
 	<util:properties id="voiceRecordings" location="classpath:META-INF/voice.properties" />
